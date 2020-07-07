@@ -20,11 +20,9 @@ jobs:
             --google-project ${{ secrets.PROJECT_ID }} \
             --google-machine-type n1-standard-4 \
             $MACHINE
-          eval "$(docker-machine env --shelll sh $MACHINE)"
-
           (
           docker-machine ssh $MACHINE "sudo mkdir -p /docker_machine && sudo chmod 777 /docker_machine" && \
-          docker-machine scp -r -q ~/.docker/machine $MACHINE:/docker_machine && \
+          docker-machine scp -r -q ~/.docker/machine/ $MACHINE:/docker_machine && \
 
           docker run --name runner -d \
             -v /docker_machine/machine:/root/.docker/machine \
@@ -35,8 +33,9 @@ jobs:
             -e RUNNER_REPO=KUrushi/example_cml \
             dvcorg/cml-py3-cloud-runner && \
 
-            sleep 20 && echo "Deployed $MACHINE"
-            ) || (echo y | docker-machine rm $MACHINE && exit 1)
+          sleep 20 && echo "Deployed $MACHINE"
+          ) || (echo y | docker-machine rm $MACHINE && exit 1)
+
 
   train:
     needs: deploy
