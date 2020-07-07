@@ -6,10 +6,11 @@ jobs:
   deploy-cloud-runner:
     runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-cloud-runner
+
     steps:
       - name: deploy
         env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.REPO_TOKEN }}
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         run: |
           echo "Deploying..."
