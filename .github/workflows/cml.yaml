@@ -15,7 +15,7 @@ jobs:
         run: |
           echo "Deploying..."
           MACHINE="CML-$(openssl rand -hex 4)"
-          echo -n ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} | base64  > $GOOGLE_APPLICATION_CREDENTIALS
+          echo -n "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64  > $GOOGLE_APPLICATION_CREDENTIALS
           docker-machine create \
             --driver google \
             --google-project $PROJECT_ID \
