@@ -11,9 +11,9 @@ jobs:
       - name: deploy
         env:
           repo_token: ${{ secrets.REPO_TOKEN }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.CRED }}
         run: |
           echo "Deploying..."
+          export GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.CRED }}
           MACHINE="CML-$(openssl rand -hex 12)"
           docker-machine create \
             --driver google \
