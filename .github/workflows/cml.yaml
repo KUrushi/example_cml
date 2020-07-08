@@ -11,7 +11,7 @@ jobs:
       - name: deploy
         env:
           repo_token: ${{ secrets.REPO_TOKEN }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.CRED }}
         run: |
           echo "Deploying..."
           MACHINE="CML-$(openssl rand -hex 12)"
