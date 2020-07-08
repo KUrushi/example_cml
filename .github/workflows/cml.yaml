@@ -16,7 +16,7 @@ jobs:
         run: |
           echo "Deploying..."
           MACHINE="CML-$(openssl rand -hex 4)"
-          echo -n $key_value > key.json
+          echo -n  "$key_value" > key.json
           export GOOGLE_APPLICATION_CREDENTIALS="key.json"
           docker-machine create --driver google --google-project $PROJECT_ID test
 #          docker-machine create \
