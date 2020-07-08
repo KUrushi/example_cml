@@ -12,10 +12,12 @@ jobs:
         env:
           repo_token: ${{ secrets.REPO_TOKEN }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+          GCP_KEY: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
         run: |
           echo "Deploying..."
           MACHINE="CML-$(openssl rand -hex 4)"
+          echo "$GCP_KEY" > ./key.json
+          GOOGLE_APPLICATION_CREDENTIALS=./key.json
           docker-machine create \
             --driver google \
             --google-project $PROJECT_ID \
