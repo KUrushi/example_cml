@@ -18,10 +18,11 @@ jobs:
           MACHINE="CML-$(openssl rand -hex 4)"
           echo $key_value > key.json
           export GOOGLE_APPLICATION_CREDENTIALS="key.json"
-          docker-machine create \
-            --driver google \
-            --google-project $PROJECT_ID \
-            $MACHINE
+          docker-machine create --driver google --google-project "$PROJECT_ID" test
+#          docker-machine create \
+#            --driver google \
+#            --google-project $PROJECT_ID \
+#            $MACHINE
 #          (
 #          docker-machine ssh $MACHINE "sudo mkdir -p /docker_machine && sudo chmod 777 /docker_machine" && \
 #          docker-machine scp -r -q ~/.docker/machine/ $MACHINE:/docker_machine && \
