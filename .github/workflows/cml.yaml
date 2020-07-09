@@ -14,17 +14,14 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           echo "Deploying..."
-          MACHINE="CML-$(openssl rand -hex 4)"
           echo ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}} > $HOME/key.json
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/key.json
+          MACHINE="CML-$(openssl rand -hex 4)"
           docker-machine create --driver google --google-project $PROJECT_ID test
-
           eval "$(docker-machine env --shell sh $MACHINE)"
-
           (
           docker-machine ssh $MACHINE "sudo mkdir -p /docker_machine && sudo chmod 777 /docker_machine" && \
           docker-machine scp -r -q ~/.docker/machine/ $MACHINE:/docker_machine && \
-
           docker run --name runner -d \
             -v /docker_machine/machine:/root/.docker/machine \
             -e RUNNER_IDLE_TIMEOUT=120 \
@@ -33,7 +30,6 @@ jobs:
             -e repo_token=$repo_token \
             -e RUNNER_REPO=https://github.com/iterative/cml_base_case \
            dvcorg/cml-py3-cloud-runner && \
-
           sleep 20 && echo "Deployed $MACHINE"
           ) || (echo y | docker-machine rm $MACHINE && exit 1)
 
