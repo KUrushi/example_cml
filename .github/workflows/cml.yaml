@@ -14,7 +14,7 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           echo "Deploying..."
-          echo ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}} | base64 -d -o $HOME/key.json
+          (echo ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}} | base64 -d -o $HOME/key.json)
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/key.json
           MACHINE="CML-$(openssl rand -hex 4)"
           docker-machine create --driver google -   -google-project $PROJECT_ID test
