@@ -15,9 +15,9 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: key.json
         run: |
           echo "Deploying..."
-          echo -n ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} >> $GOOGLE_APPLICATION_CREDENTIALS
+          echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} >> $GOOGLE_APPLICATION_CREDENTIALS
           MACHINE="CML-$(openssl rand -hex 4)"
-          docker-machine create --driver google -   -google-project $PROJECT_ID test
+          docker-machine create --driver google --google-project $PROJECT_ID test
           eval "$(docker-machine env --shell sh $MACHINE)"
           (
           docker-machine ssh $MACHINE "sudo mkdir -p /docker_machine && sudo chmod 777 /docker_machine" && \
