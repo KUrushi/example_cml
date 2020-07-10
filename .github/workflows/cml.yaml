@@ -14,10 +14,21 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           echo "Deploying..."
+          # Add the Cloud SDK distribution URI as a package source
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+          # Import the Google Cloud Platform public key
+          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+
+          # Update the package list and install the Cloud SDK
+          sudo apt-get update && sudo apt-get install google-cloud-sdk
+
           MACHINE="cml-$(openssl rand -hex 4)"
           docker-machine create --driver google --google-project $PROJECT_ID $MACHINE
           echo ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}} > key.json
           export GOOGLE_APPLICATAION_CREDENTIALS=key.json
+          gcloud auth activate-service-account ${{ secrets.SERVICE_ACCOUNT }} --key-file key.json  --project $PROJECT_ID
+
           eval "$(docker-machine env --shell sh $MACHINE)"
           (
           docker-machine ssh $MACHINE "sudo mkdir -p /docker_machine && sudo chmod 777 /docker_machine" && \
