@@ -19,7 +19,6 @@ jobs:
           MACHINE="cml-$(openssl rand -hex 4)"
           echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}' > gce-credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS='gce-credentials.json'
-          gcloud auth activate-service-account ${{ secrets.SERVICE_ACCOUNT }} --key-file key.json  --project $PROJECT_ID
 
           docker-machine create --driver google --google-project $PROJECT_ID $MACHINE
           eval "$(docker-machine env --shell sh $MACHINE)"
@@ -42,7 +41,6 @@ jobs:
     runs-on: [self-hosted,cml]
 
     steps:
-      - uses: actions/checkout@v2
 
       - name: cml_run
         env:
