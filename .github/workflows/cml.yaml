@@ -16,6 +16,10 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           echo "Deploying..."
+          base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+          curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+          sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &&
+          chmod +x /usr/local/bin/docker-machine
 
           MACHINE="cml-$(openssl rand -hex 4)"
           echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}' > gce-credentials.json
@@ -23,7 +27,6 @@ jobs:
 
           RUNNER_LABELS="gce"
           RUNNER_REPO="https://github.com/${GITHUB_REPOSITORY}"
-          MACHINE="cml$(date +%s)"
 
           docker-machine create --driver google \
             --google-machine-type "n1-standard-4" \
