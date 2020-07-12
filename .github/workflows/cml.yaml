@@ -42,8 +42,8 @@ jobs:
             -e DOCKER_MACHINE=${MACHINE} \
             -e RUNNER_LABELS="gce" \
             -e repo_token=$repo_token \
-            -e RUNNER_REPO=https://github.com/KUrushi/cml_base_case \
-           dvcorg/cml-py3-cloud-runner && \
+            -e RUNNER_REPO=https://github.com/KUrushi/example_cml \
+            davidgortega/cml-runner2:latest && \
           sleep 20 && echo "Deployed $MACHINE"
           ) || (echo y | docker-machine rm $MACHINE && exit 1)
 
