@@ -69,6 +69,7 @@ jobs:
           cml-send-comment report.md
 
   delete_instance:
+    needs: deploy-cloud-runner
     name: delete
     runs-on: ubuntu-latest
     steps:
