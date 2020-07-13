@@ -67,4 +67,11 @@ jobs:
           cat metrics.txt >> report.md
           cml-publish confusion_matrix.png --md >> report.md
           cml-send-comment report.md
-          gcloud compute instances delete $DOCKER_MACHINE
+
+  delete-instance:
+    needs: train
+    runs-on: [ubuntu-latest]
+    steps:
+      name: delete
+      run: |
+        docker-machine rm $MACHINE
