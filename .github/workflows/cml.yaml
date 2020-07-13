@@ -69,6 +69,8 @@ jobs:
           cml-send-comment report.md
 
   delete_instance:
+    name: delete
+    runs-on: ubuntu-latest
     steps:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
@@ -76,7 +78,6 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
           service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}
           export_default_credentials: true
-      - name: delete_instance
       - run: |
           MACHINE="cml-${{ github.sha }}"
           gcloud compute instances delete "$MACHINE"
