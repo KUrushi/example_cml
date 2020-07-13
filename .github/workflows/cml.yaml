@@ -80,4 +80,4 @@ jobs:
           export_default_credentials: true
       - run: |
           MACHINE="cml-${{ github.sha }}"
-          gcloud compute instances delete "$MACHINE"
+          gcloud compute instances delete $MACHINE
