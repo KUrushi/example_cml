@@ -80,5 +80,4 @@ jobs:
           service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}
           export_default_credentials: true
       - run: |
-          MACHINE="cml-${{ github.sha }}"
-          gcloud compute instances delete $MACHINE
+          gcloud compute instances delete cml-${{ github.sha }}
