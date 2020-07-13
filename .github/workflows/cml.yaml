@@ -68,14 +68,3 @@ jobs:
           cml-publish confusion_matrix.png --md >> report.md
           cml-send-comment report.md
 
-  delete-instance:
-    needs: train
-    runs-on: [ubuntu-latest]
-    container:  docker://dvcorg/cml-gpu-py3-cloud-runner
-    steps:
-      - name: cml_run
-        env:
-          repo_token: ${{ secrets.REPO_TOKEN }}
-        run: |
-          echo "$MACHINE"
-          docker-machine rm $MACHINE -y && exit 1
