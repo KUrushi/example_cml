@@ -51,7 +51,7 @@ jobs:
     runs-on: [self-hosted, cml]
 
     steps:
-
+      - uses: actions/checkout@v2
       - name: cml_run
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
