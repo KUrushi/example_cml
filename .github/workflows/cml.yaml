@@ -19,7 +19,7 @@ jobs:
           echo "$(pwd)"
           echo "$(ls)"
 
-          MACHINE="cml-$(openssl rand -hex 4)"
+          MACHINE="cml-${{ github.sha }}"
           echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}' > gce-credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS='gce-credentials.json'
 
@@ -68,3 +68,13 @@ jobs:
           cml-publish confusion_matrix.png --md >> report.md
           cml-send-comment report.md
 
+  delete_instance:
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        project_id: ${{ secrets.PROJECT_ID }}
+        service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}
+        export_default_credentials: true
+    - run: |
+        MACHINE="cml-${{ github.sha }}"
+        gcloud compute instances delete "$MACHINE"
