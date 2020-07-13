@@ -16,8 +16,8 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           echo "Deploying..."
-          ls
-          pwd
+          echo "$(pwd)"
+          echo "$(ls)"
 
           MACHINE="cml-$(openssl rand -hex 4)"
           echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}' > gce-credentials.json
@@ -56,6 +56,9 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "testing..."
+          echo "$(pwd)"
+          echo "$(ls)"
           pip install -r requirements.txt
           python train.py
 
