@@ -68,15 +68,3 @@ jobs:
           cml-publish confusion_matrix.png --md >> report.md
           cml-send-comment report.md
 
-  delete_instance:
-    needs: deploy-cloud-runner
-    name: delete
-    runs-on: ubuntu-latest
-    steps:
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          version: '290.0.1'
-          project_id: ${{ secrets.PROJECT_ID }}
-          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}
-          export_default_credentials: true
-      - run: gcloud compute instances delete cml-${{ github.sha }}
