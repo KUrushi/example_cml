@@ -21,7 +21,7 @@ jobs:
           echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}' > gce-credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS='gce-credentials.json'
 
-          RUNNER_LABELS="cml,gce"
+          RUNNER_LABELS="cml"
           RUNNER_REPO="https://github.com/${GITHUB_REPOSITORY}"
 
           docker-machine create --driver google \
@@ -39,7 +39,7 @@ jobs:
             -v /docker_machine/machine:/root/.docker/machine \
             -e RUNNER_IDLE_TIMEOUT=120 \
             -e DOCKER_MACHINE=${MACHINE} \
-            -e RUNNER_LABELS="gce" \
+            -e RUNNER_LABELS=$RUNNER_LABELS \
             -e repo_token=$repo_token \
             -e RUNNER_REPO=https://github.com/KUrushi/example_cml \
             dvcorg/cml-gpu-py3-cloud-runner:latest && \
