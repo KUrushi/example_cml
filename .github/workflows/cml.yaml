@@ -42,13 +42,13 @@ jobs:
             -e RUNNER_LABELS="gce" \
             -e repo_token=$repo_token \
             -e RUNNER_REPO=https://github.com/KUrushi/example_cml \
-            davidgortega/cml-runner2:latest && \
+            dvcorg/cml-gpu-py3-cloud-runner:latest && \
           sleep 20 && echo "Deployed $MACHINE"
           ) || (echo y | docker-machine rm $MACHINE && exit 1)
 
   train:
     needs: deploy-cloud-runner
-    runs-on: [self-hosted, linux]
+    runs-on: [self-hosted, cml]
 
     steps:
 
