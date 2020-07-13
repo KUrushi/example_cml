@@ -77,5 +77,5 @@ jobs:
         env:
           repo_token: ${{ secrets.REPO_TOKEN }}
         run: |
-          ehoc "$MACHINE"
+          echo "$MACHINE"
           docker-machine rm $MACHINE -y && exit 1
