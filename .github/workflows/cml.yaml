@@ -39,7 +39,7 @@ jobs:
           docker run --name runner -d \
             -v /docker_machine/machine:/root/.docker/machine \
             -e GOOGLE_APPLICATION_CREDENTIALS='/docker_machine/gce-credentials.json' \
-            -e RUNNER_IDLE_TIMEOUT=120 \
+            -e RUNNER_IDLE_TIMEOUT=10 \
             -e DOCKER_MACHINE=$MACHINE \
             -e RUNNER_LABELS=$RUNNER_LABELS \
             -e repo_token=$repo_token \
