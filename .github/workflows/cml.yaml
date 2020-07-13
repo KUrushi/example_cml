@@ -73,6 +73,8 @@ jobs:
     runs-on: [ubuntu-latest]
     container:  docker://dvcorg/cml-gpu-py3-cloud-runner
     steps:
-      name: delete
-      run: |
-        docker-machine rm $MACHINE
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.REPO_TOKEN }}
+        run: |
+          docker-machine rm $MACHINE && exit 1
