@@ -21,7 +21,7 @@ jobs:
           echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}' > gce-credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS='gce-credentials.json'
 
-          RUNNER_LABELS="gce"
+          RUNNER_LABELS="cml,gce"
           RUNNER_REPO="https://github.com/${GITHUB_REPOSITORY}"
 
           docker-machine create --driver google \
@@ -48,7 +48,7 @@ jobs:
 
   train:
     needs: deploy-cloud-runner
-    runs-on: [self-hosted,cml]
+    runs-on: [self-hosted, linux]
 
     steps:
 
